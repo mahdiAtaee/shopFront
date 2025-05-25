@@ -11,7 +11,7 @@ import Banner from "@/components/home/Banner";
 import SmallBanner from "@/components/home/SmallBanner";
 import DiscountedProduct from "@/components/home/DiscountedProduct";
 
-export default function Home() {
+export default function Home(props) {
   return (
     <div>
     <ShopLayout title="فروشگاه">
