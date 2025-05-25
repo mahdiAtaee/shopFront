@@ -10,6 +10,7 @@ const Login = () => {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [mobile, setMobile] = useState('')
     const router = useRouter()
 
     const handleRegister = async (e) => {
@@ -18,7 +19,7 @@ const Login = () => {
             alert('ایمیل و رمزعبور اجباری می باشد')
             return false
         }
-        const result = await register({ firstName, lastName, email, password })
+        const result = await register({ firstName, lastName, email, password, mobile })
 
 
         if (result) {
@@ -48,6 +49,7 @@ const Login = () => {
                                 <div className="border my-4 border-gray-300 rounded-lg py-2 px-4">
                                     <input
                                         type="text"
+                                        onChange={(e) => setFirstName(e.target.value)}
                                         className="w-full h-full outline-0"
                                         placeholder="نام"
                                     />
@@ -55,12 +57,14 @@ const Login = () => {
                                 <div className="border my-4 border-gray-300 rounded-lg py-2 px-4">
                                     <input
                                         type="text"
+                                        onChange={(e) => setLastName(e.target.value)}
                                         className="w-full h-full outline-0"
                                         placeholder="نام خانوادگی"
                                     />
                                 </div>
                                 <div className="border my-4 border-gray-300 rounded-lg py-2 px-4">
                                     <input
+                                        onChange={(e) => setMobile(e.target.value)}
                                         type="text"
                                         className="w-full h-full outline-0"
                                         placeholder="موبایل"
