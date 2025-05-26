@@ -20,13 +20,13 @@ const Filter = ({ category }) => {
 
     return (
         <div className='col-12 col-md-3'>
-            {category.groups.map(group => (
+            {category && category.groups && category.groups.map(group => (
                 <>
                     <h2>
                         {group.title}
                     </h2>
                     <ul key={group.slug} className="custom-list custom-list-border">
-                        {group.attributes.map((attribute) => (
+                        {group && group.attributes && group.attributes.map((attribute) => (
                             <li key={attribute.slug}>
                                 <div className="form-group">
                                     <div className="custom-control custom-checkbox">
