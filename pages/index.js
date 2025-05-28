@@ -14,14 +14,14 @@ import DiscountedProduct from "@/components/home/DiscountedProduct";
 export default function Home(props) {
   return (
     <div>
-    <ShopLayout title="فروشگاه">
-        <Header products={props.popular}/>
+      <ShopLayout title="فروشگاه">
+        <Header products={props.popular} />
         <BestSellers products={props.best_sellers} />
         <Banner />
         <MostViewed products={props.most_viewed} />
         <SmallBanner />
         <Latests products={props.latest} />
-        <DiscountedProduct products={props.popular}/>
+        <DiscountedProduct products={props.popular} />
         <Popular products={props.popular} />
       </ShopLayout>
     </div>
@@ -30,14 +30,17 @@ export default function Home(props) {
 
 export async function getStaticProps() {
   const result = await API.get('/home')
-  
+
+  console.log(result.data.latest);
+
   return {
     props: {
       best_sellers: result.data.best_sellers,
       most_viewed: result.data.most_viewed,
       popular: result.data.popular,
       latest: result.data.latest
-    }
+    },
+    revalidate: 60,
   }
 }
 

@@ -24,6 +24,7 @@ const ProductItem = (product) => {
             <div className="relative flex items-center justify-center">
                 {isSpecialOffer(product.price, product.discountedPrice) ? <div className="absolute top-1 left-1 bg-red-100 py-1 px-2 rounded-xl text-red-500">ویژه</div> : null}
                 <Image
+                    //loader={({ src }) => `https://YOUR_SUPABASE_BUCKET_URL/${src}`}
                     className="card-img-top"
                     src={product.thumbnail}
                     alt="card image"

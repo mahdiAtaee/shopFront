@@ -1,6 +1,8 @@
 import axios from "axios"
 
-axios.defaults.baseURL = "https://deployshop.onrender.com/api/v1"
+// axios.defaults.baseURL = "https://deployshop.onrender.com/api/v1"
+axios.defaults.baseURL = "http://localhost:5000/api/v1"
+
 
 export const get = (url, configs = {}) => {
     return axios.get(url, configs)

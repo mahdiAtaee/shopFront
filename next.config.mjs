@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["picsum.photos", 'loremflickr.com', "api.gravatar.com", 'www.gravatar.com', 'localhost']
+    domains: ['fwgxrnpokcmubavvgwwa.supabase.co',"", "api.gravatar.com", "deployshop.onrender.com", 'www.gravatar.com', 'localhost']
   },
   async rewrites() {
     return [
