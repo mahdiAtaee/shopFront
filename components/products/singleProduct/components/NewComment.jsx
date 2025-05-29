@@ -67,7 +67,7 @@ const NewComment = ({ modalIsOpen, closeModal }) => {
             contentLabel="Example Modal"
 
         >
-            <div className='w-full' dir='rtl'>
+            <div className='w-full mb-6' dir='rtl'>
                 <button onClick={closeModal} className='cursor-pointer text-xl flex items-center justify-center gap-2'>
                     <BiSolidRightArrowAlt />
                     <span>ثبت دیدگاه</span>
@@ -75,7 +75,7 @@ const NewComment = ({ modalIsOpen, closeModal }) => {
             </div>
             {
                 isUserLoggedIn
-                    ? (<Link href="/auth/login" className='py-2 px-4 bg-black text-white rounded mx-auto '>برای ثبت نظر باید وارد حساب خود شوید</Link>)
+                    ? (<Link href="/auth/login" className='py-2 px-4 bg-black text-white rounded mx-auto'>برای ثبت نظر باید وارد حساب خود شوید</Link>)
                     : (<form dir='rtl' onSubmit={handleSubmit(onSubmit)}>
                         <div className='my-6'>
                             <span>امتیاز خود به این محصول را از ۰ تا ۵ ستاره انتخاب نمایید</span>

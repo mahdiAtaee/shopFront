@@ -9,7 +9,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Card from '@/components/home/Card'
 
 
-const SingleProduct = ({ product, comments, relatedProducts }) => {
+const SingleProduct = ({ product, comments, relatedProducts }) => {    
     return (
         <section className="w-dvw min-h-dvh overflow-x-hidden">
             <div className='w-screen grid grid-cols-1 gird-rows-2 md:grid-cols-2 md:grid-rows-1 gap-8 p-4'>

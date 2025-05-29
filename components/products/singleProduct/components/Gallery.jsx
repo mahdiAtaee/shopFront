@@ -9,7 +9,7 @@ import 'swiper/css/scrollbar';
 import Image from 'next/image';
 
 const Gallery = ({ images }) => {
-    images = [...images, ...images, ...images]
+    // images = [...images, ...images, ...images]
     return (
         <Swiper
             modules={[Navigation, Pagination, Autoplay, A11y]}

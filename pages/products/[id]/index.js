@@ -22,6 +22,7 @@ export async function getStaticProps(context) {
         const { slug } = product.data.category
         relatedProducts = await API.get(`/categories/${slug}/products`)
     }
+    
 
     return {
         props: {
