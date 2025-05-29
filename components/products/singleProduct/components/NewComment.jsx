@@ -32,7 +32,11 @@ const NewComment = ({ modalIsOpen, closeModal }) => {
     const router = useRouter()
     useEffect(() => {
         const token = localStorage.getItem('token')
+        console.log(token);
+        
         if (token) {
+            console.log('here');
+            
             setIsUserLoggedIn(true)
         }
     }, [])
@@ -74,12 +78,12 @@ const NewComment = ({ modalIsOpen, closeModal }) => {
                 </button>
             </div>
             {
-                isUserLoggedIn
+                !isUserLoggedIn
                     ? (<Link href="/auth/login" className='py-2 px-4 bg-black text-white rounded mx-auto'>برای ثبت نظر باید وارد حساب خود شوید</Link>)
                     : (<form dir='rtl' onSubmit={handleSubmit(onSubmit)}>
                         <div className='my-6'>
                             <span>امتیاز خود به این محصول را از ۰ تا ۵ ستاره انتخاب نمایید</span>
-                            <ReactStars half value={score} onChange={(value) => setScore(value)} edit={true} size={30} />
+                            <ReactStars value={score} onChange={(value) => setScore(value)} edit={true} size={30} />
                             <p id="helper-text-explanation" className="mt-2 text-xs text-gray-500 dark:text-gray-400">تغییر ندادن ستاره ها به معنای امتیاز ۰ است.</p>
                         </div >
                         <div className='my-6'>
