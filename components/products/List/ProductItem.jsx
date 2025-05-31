@@ -20,7 +20,7 @@ const ProductItem = (product) => {
     }
 
     return (
-        <div className="card product border-0 bg-white rounded-2xl p-4 min-h-full flex flex-col items-stretch">
+        <div className="card product bg-white rounded-2xl p-4 min-h-full flex flex-col items-stretch">
             <div className="relative flex items-center justify-center">
                 {isSpecialOffer(product.price, product.discountedPrice) ? <div className="absolute top-1 left-1 bg-red-100 py-1 px-2 rounded-xl text-red-500">ویژه</div> : null}
                 <Image

@@ -2,16 +2,17 @@
 import React from 'react'
 import ProductItem from './ProductItem'
 
+
 const ProductList = ({ products }) => {
     return (
         <section className="section-gap">
-                <div className="w-full p-8 grid grid-cols-4 gap-2">
-                    {products.map((product) => (
-                        <div key={product.id} className='shadow shadow-gray-700 rounded'>
-                            <ProductItem {...product}/>
-                        </div>
-                    ))}
-                </div>
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-x !divide-y divide-gray-200">
+                {products.map((product) => (
+                    <div key={product.id} className='searchProduct min-h-96 hover:shadow-xl transition-shadow duration-300'>
+                        <ProductItem {...product} />
+                    </div>
+                ))}
+            </div>
         </section>
 
     )

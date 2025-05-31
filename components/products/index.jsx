@@ -2,11 +2,12 @@
 import React from 'react'
 import ProductList from './List'
 
-const Products = ({items}) => {
+
+const Products = ({ items }) => {
   return (
-    <>
-        <ProductList products={items}/>
-    </>
+    <div className='flex-4/5'>
+      <ProductList products={items} />
+    </div>
   )
 }
 

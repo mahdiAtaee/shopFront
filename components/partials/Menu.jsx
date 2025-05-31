@@ -12,9 +12,7 @@ const Menu = () => {
     const [categories, setCategories] = useState([])
     useEffect(() => {
         const fetchCategories = async () => {
-            const { data } = await get('/categories')
-            console.log(data);
-            
+            const { data } = await get('/categories')            
             setCategories(data.categories)
         }
         fetchCategories()
