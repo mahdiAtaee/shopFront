@@ -7,9 +7,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosArrowUp } from "react-icons/io";
 
-const Filter = ({ category, isShow,handleShowFilter }) => {
-    console.log(category);
-
+const Filter = ({ category, isShow, handleShowFilter }) => {
     const router = useRouter()
     const handleChangeFilter = (e, title, slug) => {
         const isCheckedFilter = e.target.checked

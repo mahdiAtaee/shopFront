@@ -6,7 +6,7 @@ import * as API from '@/services/api'
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { FaFilter } from "react-icons/fa";
 
-const Search = ({ products, category }) => {
+const Search = ({ products, category, notFound }) => {
   const [showFilter, setShowFilter] = React.useState(false)
   const toggleFilter = () => {
     setShowFilter(!showFilter)
@@ -20,7 +20,20 @@ const Search = ({ products, category }) => {
       setShowFilter(true)
     }
   }, [])
-  
+
+  if (notFound) {
+    return (
+      <ShopLayout title="جست و جو">
+        <div className='w-full min-h-dvh flex p-2'>
+          <Filter category={category} isShow={showFilter} handleShowFilter={toggleFilter} />
+          <div className='flex-4/5 flex items-center justify-center'>
+            <h2 className='text-xl text-gray-600'>محصولی یافت نشد</h2>
+          </div>
+        </div>
+      </ShopLayout>
+    )
+  }
+
 
   return (
     <ShopLayout title="جست و جو">
@@ -55,8 +68,16 @@ const Search = ({ products, category }) => {
 
 export async function getServerSideProps({ params }) {
   const { slug } = params
+  let products = {}
 
-  const products = await API.get(`/products/category/${slug}`)
+  try {
+    products = await API.get(`/products/category/${slug}`)
+  } catch (error) {
+    console.error("Error fetching products in [slug]:", error);
+    return {
+       props: { notFound: true },
+    }
+  }
 
 
   return {

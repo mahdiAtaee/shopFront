@@ -23,6 +23,17 @@ const ProductItem = (product) => {
         <div className="card product bg-white rounded-2xl p-4 min-h-full flex flex-col items-stretch">
             <div className="relative flex items-center justify-center">
                 {isSpecialOffer(product.price, product.discountedPrice) ? <div className="absolute top-1 left-1 bg-red-100 py-1 px-2 rounded-xl text-red-500">ویژه</div> : null}
+                {
+                    product?.variations && product.variations.map(variation => (
+                        <>
+                            {variation.items.map(item => (
+                                <div className="absolute top-3 left-1">
+                                    <span className="w-2 h-2 inline-block rounded-full" style={{backgroundColor: `${item.value}`}} />
+                                </div>
+                            ))}
+                        </>
+                    ))
+                }
                 <Image
                     //loader={({ src }) => `https://YOUR_SUPABASE_BUCKET_URL/${src}`}
                     className="card-img-top"
