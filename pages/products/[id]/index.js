@@ -15,32 +15,32 @@ const index = ({ product, comments, relatedProducts }) => {
 export async function getStaticProps(context) {
     const { id } = context.params
 
-    const product = await API.get(`/products/${id}`)
-    if (product.status !== 200) {
-        return {
-            notFound: true,
-        }
-    }
-    const comments = await API.get(`/products/${id}/comments`)
-    if (comments.status !== 200) {
-        return {
-            notFound: true,
-        }
-    }
-    let relatedProducts
-    if (product.status == 200 && product.data && product.data.category != null) {
-        const { slug } = product.data.category
-        relatedProducts = await API.get(`/categories/${slug}/products`)
-    }
-    
+    try {
+        const product = await API.get(`/products/${id}`)
+        const comments = await API.get(`/products/${id}/comments`)
 
-    return {
-        props: {
-            product: product.data,
-            comments: comments.data,
-            relatedProducts: relatedProducts?.data ? relatedProducts.data : []
+        let relatedProducts
+        if (product.status == 200 && product.data && product.data.category != null) {
+            const { slug } = product.data.category
+            relatedProducts = await API.get(`/categories/${slug}/products`)
+        }
+
+        return {
+            props: {
+                product: product.data,
+                comments: comments.data,
+                relatedProducts: relatedProducts?.data ? relatedProducts.data : []
+            }
+        }
+
+    } catch (error) {
+        console.error("Error fetching product data:", error);
+        return {
+            notFound: true,
         }
     }
+
+
 
 }
 
