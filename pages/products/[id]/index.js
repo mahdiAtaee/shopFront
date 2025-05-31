@@ -16,7 +16,17 @@ export async function getStaticProps(context) {
     const { id } = context.params
 
     const product = await API.get(`/products/${id}`)
+    if (product.status !== 200) {
+        return {
+            notFound: true,
+        }
+    }
     const comments = await API.get(`/products/${id}/comments`)
+    if (comments.status !== 200) {
+        return {
+            notFound: true,
+        }
+    }
     let relatedProducts
     if (product.status == 200 && product.data && product.data.category != null) {
         const { slug } = product.data.category

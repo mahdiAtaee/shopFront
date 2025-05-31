@@ -16,7 +16,7 @@ const ProductList = ({ products }) => {
         const getFilteredProducts = async () => {
             try {
                 const products = await API.get(`/products/category/${query.slug}?${(new URLSearchParams(query).toString())}`)
-                console.log("products", products);
+                
                 if (products) {
                     if (products.data.products.length === 0) {
                         setProductList([])
