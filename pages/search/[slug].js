@@ -25,7 +25,10 @@ const Search = ({ products, category, notFound }) => {
     return (
       <ShopLayout title="جست و جو">
         <div className='w-full min-h-dvh flex p-2'>
-          <Filter category={category} isShow={showFilter} handleShowFilter={toggleFilter} />
+          <div className={`flex-1/5 rounded-xl border border-gray-200 p-4 min-h-max w-full h-[95dvh] md:h-auto bg-white fixed md:relative top-0 right-0 md:top-auto md:right-auto z-10 overflow-y-auto ${showFilter ? 'block' : 'hidden'}`}>
+            <p className='text-xs text-red-300 text-center'>خطایی رخ داده!</p>
+            <button className='py-2 px-4 rounded text-red-300 border-red-300 hover:bg-red-300 hover:text-white'>لطفا محددا تلاش نمایید</button>
+          </div>
           <div className='flex-4/5 flex items-center justify-center'>
             <h2 className='text-xl text-gray-600'>محصولی یافت نشد</h2>
           </div>
@@ -72,6 +75,7 @@ export async function getServerSideProps({ params }) {
 
   try {
     products = await API.get(`/products/category/${slug}`)
+    
   } catch (error) {
     console.error("Error fetching products in [slug]:", error);
     return {

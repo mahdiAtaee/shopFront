@@ -8,6 +8,8 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosArrowUp } from "react-icons/io";
 
 const Filter = ({ category, isShow, handleShowFilter }) => {
+    console.log('category', category);
+    
     const router = useRouter()
     const handleChangeFilter = (e, title, slug) => {
         const isCheckedFilter = e.target.checked
@@ -28,10 +30,10 @@ const Filter = ({ category, isShow, handleShowFilter }) => {
                 <h2 className='text-xl text-gray-600'>فیلتر ها</h2>
                 <span className='text-xs text-red-300 cursor-pointer'>حدف فیلترها</span>
             </div>
-            {category && category.filterGroups && category.filterGroups.map(group => (
+            {category && category.filterGroups.map(group => (
                 <div>
                     <Accordion.Root type="single" collapsible>
-                        {group && group.filters && group.filters.map((attribute) => (
+                        {group.filters.map((attribute) => (
                             <>
                                 {attribute.filterable &&
                                     <Accordion.Item value={attribute.uid} key={attribute.slug} className="border-b border-gray-200">
