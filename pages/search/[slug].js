@@ -76,20 +76,17 @@ export async function getServerSideProps({ params }) {
   try {
     const { slug } = params
     const products = await API.get(`/products/category/${slug}`)
+    const category = await API.get(`/categories/${slug}`)
 
     console.log("Products fetched in getServerSideProps:", products);
-    if (!products.data.category) {
-      return {
-        props: { notFound: true },
-      }
-    }
+   
 
     
 
     return {
       props: {
         products: products && products.data.products,
-        category: products && products.data.category
+        category: category && category.data.category
       },
     }
 
