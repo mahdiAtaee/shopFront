@@ -26,6 +26,11 @@ export async function getStaticProps(context) {
             relatedProducts = rel?.data || [];
         }
 
+        console.log("product in getStaticProps:", product);
+        console.log("comments in getStaticProps:", comments);
+        console.log("relatedProducts in getStaticProps:", relatedProducts);
+        
+
         return {
             props: {
                 product: product?.data,

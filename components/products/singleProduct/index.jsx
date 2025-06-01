@@ -81,7 +81,7 @@ const SingleProduct = ({ product, comments, relatedProducts }) => {
             </div>
             <div className='w-screen my-6'>
                 {relatedProducts &&
-                    <Card products={relatedProducts.products} title={`کالاهای مشابه در دسته بندی ${relatedProducts.category.name.FA}`} />}
+                    <Card products={relatedProducts.products} title={`کالاهای مشابه در دسته بندی ${relatedProducts?.category?.name?.FA}`} />}
             </div>
         </section>
     )
