@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head >
-        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+        <link rel="icon" href="/assets/img/shop.ico" />
 
         {/* <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> */}
         <link href="/assets/vendor/fontawesome/css/all.min.css" rel="stylesheet" />

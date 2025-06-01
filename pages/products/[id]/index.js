@@ -19,15 +19,12 @@ export async function getStaticProps(context) {
         const product = await API.get(`/products/${id}`)
         const comments = await API.get(`/products/${id}/comments`)
 
-        let relatedProducts
+        let relatedProducts = []
         if (product.status == 200 && product.data && product.data.category != null) {
-            const { slug } = product.data.category
-            relatedProducts = await API.get(`/categories/${slug}/products`)
+            const slug = product.data.category.slug;
+            const rel = await API.get(`/categories/${slug}/products`);
+            relatedProducts = rel?.data || [];
         }
-
-        console.log(relatedProducts);
-        console.log(comments);
-
 
         return {
             props: {
@@ -38,10 +35,11 @@ export async function getStaticProps(context) {
         }
 
     } catch (error) {
-        console.error("Error fetching product data:", error);
-        return {
-            notFound: true,
+        if (error.response?.status === 404) {
+            return { notFound: true };
         }
+        console.error("Error fetching product data:", error);
+        throw error; // Re-throw the error to be handled by Next.js
     }
 
 
