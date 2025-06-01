@@ -1,15 +1,32 @@
 'use client'
 /* eslint-disable react/prop-types */
 import { addQueryArgs, removeQueryArgs } from '@/services/queryString'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import * as Accordion from '@radix-ui/react-accordion';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoIosArrowUp } from "react-icons/io";
+import * as API from '@/services/api'
 
 const Filter = ({ category, isShow, handleShowFilter }) => {
     console.log('category', category);
-    
+    const [categories, setCategories] = useState(category ? category : [])
+
+
+    useEffect(() => {
+        const getCategory = async () => {
+            const category = await API.get(`/categories/${slug}`)
+            if (category && category.data) {
+                setCategories(category.data.category)
+            } else {
+                setCategories([])
+            }
+        }
+        getCategory()
+    }, [])
+
+
+
     const router = useRouter()
     const handleChangeFilter = (e, title, slug) => {
         const isCheckedFilter = e.target.checked
@@ -30,7 +47,7 @@ const Filter = ({ category, isShow, handleShowFilter }) => {
                 <h2 className='text-xl text-gray-600'>فیلتر ها</h2>
                 <span className='text-xs text-red-300 cursor-pointer'>حدف فیلترها</span>
             </div>
-            {category && category.filterGroups.map(group => (
+            {categories && categories.filterGroups.map(group => (
                 <div>
                     <Accordion.Root type="single" collapsible>
                         {group.filters.map((attribute) => (
