@@ -6,7 +6,7 @@ import * as API from '@/services/api'
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { FaFilter } from "react-icons/fa";
 
-const Search = ({ products, category, notFound }) => {
+const Search = ({ products, category, notFound }) => {  
   const [showFilter, setShowFilter] = React.useState(false)
   const toggleFilter = () => {
     setShowFilter(!showFilter)
@@ -83,6 +83,9 @@ export async function getServerSideProps({ params }) {
     }
   }
 
+
+  console.log("category in search", products.data.category);
+  console.log('products in search', products.data);
 
   return {
     props: {
