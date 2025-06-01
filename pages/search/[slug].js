@@ -79,7 +79,7 @@ export async function getServerSideProps({ params }) {
 
     console.log("Products fetched in getServerSideProps:", products);
     console.log("Category fetched in getServerSideProps:", products.category);
-    if (!products.category) {
+    if (!products.data.category) {
       return {
         props: { notFound: true },
       }
