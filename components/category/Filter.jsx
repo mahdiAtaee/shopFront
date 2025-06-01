@@ -14,8 +14,9 @@ const Filter = ({ category, isShow, handleShowFilter }) => {
 
 
     useEffect(() => {
+        const query = router.query
         const getCategory = async () => {
-            const category = await API.get(`/categories/${slug}`)
+            const category = await API.get(`/categories/${query.slug}`)
             if (category && category.data) {
                 setCategories(category.data.category)
             } else {
