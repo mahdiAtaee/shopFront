@@ -8,7 +8,7 @@ import { FaFilter } from "react-icons/fa";
 
 const Search = ({ products, category, notFound }) => {
   console.log('Search Component Rendered', products, category, notFound);
-  
+
   const [showFilter, setShowFilter] = React.useState(false)
   const toggleFilter = () => {
     setShowFilter(!showFilter)
@@ -84,20 +84,22 @@ export async function getServerSideProps({ params }) {
       }
     }
 
+    console.log("Products fetched in getServerSideProps:", products);
+    console.log("Category fetched in getServerSideProps:", products.category);
+    
+
+    return {
+      props: {
+        products: products && products.data.products,
+        category: products && products.data.category
+      },
+    }
+
   } catch (error) {
     console.error("Error fetching products in [slug]:", error);
     return {
       props: { notFound: true },
     }
-  }
-
-
-
-  return {
-    props: {
-      products: products && products.data.products,
-      category: products && products.data.category
-    },
   }
 }
 
