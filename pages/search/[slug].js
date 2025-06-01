@@ -7,6 +7,8 @@ import { AiOutlineOrderedList } from "react-icons/ai";
 import { FaFilter } from "react-icons/fa";
 
 const Search = ({ products, category, notFound }) => {
+  console.log('Search Component Rendered', products, category, notFound);
+  
   const [showFilter, setShowFilter] = React.useState(false)
   const toggleFilter = () => {
     setShowFilter(!showFilter)
