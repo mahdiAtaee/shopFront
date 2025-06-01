@@ -78,7 +78,6 @@ export async function getServerSideProps({ params }) {
     const products = await API.get(`/products/category/${slug}`)
 
     console.log("Products fetched in getServerSideProps:", products);
-    console.log("Category fetched in getServerSideProps:", products.category);
     if (!products.data.category) {
       return {
         props: { notFound: true },
