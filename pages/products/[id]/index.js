@@ -25,10 +25,14 @@ export async function getStaticProps(context) {
             relatedProducts = await API.get(`/categories/${slug}/products`)
         }
 
+        console.log(relatedProducts);
+        console.log(comments);
+
+
         return {
             props: {
-                product: product.data,
-                comments: comments.data,
+                product: product?.data,
+                comments: comments?.data ? comments.data : [],
                 relatedProducts: relatedProducts?.data ? relatedProducts.data : []
             }
         }
@@ -45,15 +49,24 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-    const products = await API.get('/products')
+    try {
+        const products = await API.get('/products')
 
-    const paths = products.data.map((product) => ({
-        params: { id: product.id }
-    }))
+        const paths = products.data.map((product) => ({
+            params: { id: product.id }
+        }))
 
-    return {
-        paths,
-        fallback: true,
+        return {
+            paths,
+            fallback: 'blocking' // or true, depending on your needs
+        }
+
+    } catch (error) {
+        console.error("getStaticPaths error:", error);
+        return {
+            paths: [],
+            fallback: 'blocking'
+        };
     }
 }
 
