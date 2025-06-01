@@ -72,20 +72,19 @@ const Search = ({ products, category, notFound }) => {
 }
 
 export async function getServerSideProps({ params }) {
-  const { slug } = params
-  let products = {}
-
+  
   try {
-    products = await API.get(`/products/category/${slug}`)
+    const { slug } = params
+    const products = await API.get(`/products/category/${slug}`)
 
+    console.log("Products fetched in getServerSideProps:", products);
+    console.log("Category fetched in getServerSideProps:", products.category);
     if (!products.category) {
       return {
         props: { notFound: true },
       }
     }
 
-    console.log("Products fetched in getServerSideProps:", products);
-    console.log("Category fetched in getServerSideProps:", products.category);
     
 
     return {
