@@ -19,6 +19,8 @@ const Filter = ({ category, isShow, handleShowFilter }) => {
             const category = await API.get(`/categories/${query.slug}`)
             if (category && category.data) {
                 setCategories(category.data.category)
+                console.log('category data', category.data.category);
+                
             } else {
                 setCategories([])
             }
@@ -48,7 +50,7 @@ const Filter = ({ category, isShow, handleShowFilter }) => {
                 <h2 className='text-xl text-gray-600'>فیلتر ها</h2>
                 <span className='text-xs text-red-300 cursor-pointer'>حدف فیلترها</span>
             </div>
-            {categories && categories.filterGroups.map(group => (
+            {categories.length > 0 && categories?.filterGroups?.map(group => (
                 <div>
                     <Accordion.Root type="single" collapsible>
                         {group.filters.map((attribute) => (
