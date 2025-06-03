@@ -50,7 +50,7 @@ const Filter = ({ category, isShow, handleShowFilter }) => {
                 <h2 className='text-xl text-gray-600'>فیلتر ها</h2>
                 <span className='text-xs text-red-300 cursor-pointer'>حدف فیلترها</span>
             </div>
-            {categories.length > 0 && categories?.filterGroups?.map(group => (
+            {categories && categories?.filterGroups?.map(group => (
                 <div>
                     <Accordion.Root type="single" collapsible>
                         {group.filters.map((attribute) => (
