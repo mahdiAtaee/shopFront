@@ -1,84 +1,126 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback } from 'react'
-import ImageGallery from "react-image-gallery";
-import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+import React, { useState } from 'react'
+import { Navigation, Pagination, A11y, Autoplay, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import Image from 'next/image';
-import "react-image-gallery/styles/css/image-gallery.css";
-
-const handleFullscreen = (url) => {
-    const img = document.createElement('img');
-    img.src = url;
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.objectFit = 'contain';
-    img.style.background = '#000';
-
-    const wrapper = document.createElement('div');
-    wrapper.style.position = 'fixed';
-    wrapper.style.top = 0;
-    wrapper.style.left = 0;
-    wrapper.style.width = '100vw';
-    wrapper.style.height = '100vh';
-    wrapper.style.zIndex = 9999;
-    wrapper.style.backgroundColor = 'black';
-    wrapper.appendChild(img);
-
-    wrapper.onclick = () => document.body.removeChild(wrapper);
-    document.body.appendChild(wrapper);
-};
-
-
-const renderCustomImage = (item) => {
-    return (
-        <div onClick={() => handleFullscreen(item.original)}>
-            <Image
-                src={item.original}
-                alt={item.originalAlt}
-                width={500}
-                height={400}
-                loading='lazy'
-                style={{
-                    width: '100%',    // یا '100%'، یا هر عدد دلخواه
-                    height: '400px',   // یا 'auto'
-                    objectFit: 'cover', // یا contain بسته به نیاز
-                    cursor: 'pointer',
-                }}
-            />
-        </div>
-    );
-};
+import { IoMdClose } from "react-icons/io";
 
 const Gallery = ({ images }) => {
     // images = [...images, ...images, ...images]
-    const formattedImages = images.map((image) => ({
-        original: image,
-        thumbnail: image,
-        originalClass: "gallery-image h-[400px]",
-        originalStyle: { height: "400px" },
-        thumbnailClass: "gallery-thumbnail",
-        thumbnailStyle: { height: "100px" },
-        originalWidth: '100%',
-        originalHeight: '100%',
-    }));
+    const [mainThumbs, setMainThumbs] = useState(null);
+    const [fullscreenThumbs, setFullscreenThumbs] = useState(null);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
-
+    const hasMainThumbs = mainThumbs && !mainThumbs.destroyed;
+    const hasFullscreenThumbs = fullscreenThumbs && !fullscreenThumbs.destroyed;
 
     return (
-        <ImageGallery
-            showNav={false} // حذف navigation arrows
-            showPlayButton={false} // حذف دکمه play
-            showFullscreenButton={false} // حذف دکمه fullscreen
-            lazyLoad
-            isRTL
-            items={formattedImages}
-            renderItem={renderCustomImage}
+        <>
+            {/* Normal mode */}
+            <div className="w-full">
+                <Swiper
+                    spaceBetween={10}
+                    navigation
+                    modules={[Navigation, Thumbs]}
+                    thumbs={hasMainThumbs ? { swiper: mainThumbs } : undefined}
+                    onClick={() => setIsFullscreen(true)}
+                    className="cursor-pointer"
+                >
+                    {images.map((img, index) => (
+                        <SwiperSlide key={index}>
+                            <Image
+                                src={img}
+                                alt={`main-${index}`}
+                                width={800}
+                                height={600}
+                                loading="lazy"
+                                className="w-full h-[400px] object-cover"
+                            />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
 
-        />
+                <Swiper
+                    onSwiper={setMainThumbs}
+                    spaceBetween={10}
+                    slidesPerView={5}
+                    watchSlidesProgress
+                    freeMode
+                    modules={[Thumbs]}
+                    className="mt-4"
+                >
+                    {images.map((img, index) => (
+                        <SwiperSlide key={index}>
+                            <Image
+                                onClick={() => setIsFullscreen(true)}
+                                src={img}
+                                alt={`thumb-${index}`}
+                                width={100}
+                                height={100}
+                                loading="lazy"
+                                className="w-full h-[100px] object-cover border cursor-pointer"
+                            />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+
+            {/* Fullscreen mode */}
+            {isFullscreen && (
+                <div
+                    className="fixed inset-0 z-[9999] bg-black flex flex-col justify-center items-center"
+
+                >
+                    <IoMdClose className='absolute top-5 left-5 text-4xl text-red-600 cursor-pointer' onClick={() => setIsFullscreen(false)} />
+                    <div className="w-full max-w-5xl px-2">
+                        <Swiper
+                            spaceBetween={10}
+                            navigation
+                            modules={[Navigation, Thumbs]}
+                            thumbs={hasFullscreenThumbs ? { swiper: fullscreenThumbs } : undefined}
+                            className="mb-4"
+                        >
+                            {images.map((img, index) => (
+                                <SwiperSlide key={index}>
+                                    <Image
+                                        src={img}
+                                        alt={`fullscreen-${index}`}
+                                        width={1600}
+                                        height={1200}
+                                        className="w-full max-h-[80vh] object-contain"
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+
+                        <Swiper
+                            onSwiper={setFullscreenThumbs}
+                            spaceBetween={10}
+                            slidesPerView={6}
+                            watchSlidesProgress
+                            freeMode
+                            modules={[Thumbs]}
+                        >
+                            {images.map((img, index) => (
+                                <SwiperSlide key={index}>
+                                    <Image
+                                        src={img}
+                                        alt={`thumb-full-${index}`}
+                                        width={100}
+                                        height={100}
+                                        className="w-full h-[80px] object-cover border"
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
 
