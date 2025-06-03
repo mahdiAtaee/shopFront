@@ -1,14 +1,27 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import ShopLayout from '@/components/layouts/Shop'
-import Filter from '@/components/category/Filter'
-import Products from '@/components/products'
+// import Filter from '@/components/category/Filter'
+// import Products from '@/components/products'
 import * as API from '@/services/api'
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { FaFilter } from "react-icons/fa";
+import FilterSidebarSkeleton from '@/components/skeleton/products/FilterSkeleton';
+import ProductListSkeleton from '@/components/skeleton/products/ProductsListSkeleton';
+
+
+const Products = dynamic(() => import('@/components/products'), {
+  loading: () => <ProductListSkeleton />,
+  ssr: false
+})
+
+const Filter = dynamic(() => import('@/components/category/Filter'), {
+  loading: () => <FilterSidebarSkeleton />,
+  ssr: false
+})
+
 
 const Search = ({ products, category, notFound }) => {
-  console.log('Search Component Rendered', products, category, notFound);
-
   const [showFilter, setShowFilter] = React.useState(false)
   const toggleFilter = () => {
     setShowFilter(!showFilter)
@@ -72,15 +85,10 @@ const Search = ({ products, category, notFound }) => {
 }
 
 export async function getServerSideProps({ params }) {
-  
+
   try {
     const { slug } = params
     const products = await API.get(`/products/category/${slug}`)
-
-    console.log("Products fetched in getServerSideProps:", products);
-   
-
-    
 
     return {
       props: {

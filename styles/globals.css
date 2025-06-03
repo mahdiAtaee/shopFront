@@ -79,8 +79,44 @@
     @apply after:absolute after:w-96 after:h-96 after:rounded-l-full after:bg-white after:-top-16 after:right-52 before:absolute before:w-96 before:h-96 before:rounded-full before:bg-white before:z-10 before:-bottom-8 before:right-32
   }
 
+  .mover {
+    @apply h-2.5 w-20 relative animate-[mover5_2s_ease-in-out_infinite] rounded-[10px] before:w-[50px] before:top-5 after:w-[60px] after:-top-5;
+    background: rgba(248, 25, 25, 0.979);
+  }
+
+  .mover::before,
+  .mover::after {
+    @apply content-[''] absolute h-2.5 animate-[mover5_2s_ease-in-out_infinite] rounded-[10px] left-5;
+  }
+
+  .mover::before {
+    background: rgb(201, 1, 1);
+  }
+
+  .mover::after {
+    background: rgb(255, 116, 106);
+  }
+
 }
 
+@keyframes mover5 {
+  0% {
+    transform: translateX(30px) scale(1);
+  }
+
+  50% {
+    transform: translateX(-30px) scale(1.1);
+  }
+
+  100% {
+    transform: translateX(30px) scale(1);
+  }
+}
+
+.image-gallery-image{
+  height: 100% !important;
+  object-fit: cover !important;
+}
 
 .custom-control-label::before,
 .custom-control-label::after {
@@ -220,7 +256,7 @@
     min-height: auto;
   }
 
-  .searchProduct .card{
+  .searchProduct .card {
     flex-direction: row;
   }
 

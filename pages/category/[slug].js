@@ -5,6 +5,7 @@ import Filter from '@/components/category/Filter'
 import ProductItem from '@/components/category/ProductItems'
 import ShopLayout from '@/components/layouts/Shop'
 import { useRouter } from 'next/router'
+import { notFound } from 'next/navigation'
 
 const Category = ({ products, category }) => {
     const [productList, setProductList] = React.useState(products)
@@ -25,9 +26,15 @@ const Category = ({ products, category }) => {
 
     if (router.isFallback) {
         return (
-            <h1>Loading ...</h1>
+            <ShopLayout title="بارگذاری محصول...">
+                <div className="w-full h-screen flex items-center justify-center flex-col gap-4">
+                    <p className='text-lg md:text-2xl mb-6'>در حال بارگذاری ...</p>
+                    <div className='mover' />
+                </div>
+            </ShopLayout>
         )
     }
+    
     return (
         <ShopLayout title="دسته بندی">
             <div className='container my-5 py-5'>
@@ -42,37 +49,47 @@ const Category = ({ products, category }) => {
 
 export async function getStaticProps({ params }) {
     const { slug } = params
-    let response = {
-        status: 404
-    }
+
     try {
         response = await api.get(`/categories/${slug}/products`)
+
+        return {
+            props: {
+                products: response.status == 200 ? response.data.products : [],
+                category: response.status == 200 ? response.data.category : []
+            }
+        }
     } catch (error) {
         console.log(error)
-    }
-
-    return {
-        props: {
-            products: response.status == 200 ? response.data.products : [],
-            category: response.status == 200 ? response.data.category : []
+        return {
+            props: {
+                notFound: true
+            }
         }
     }
+
 }
+
+
 export async function getStaticPaths() {
-    let paths = []
     try {
         const response = await api.get('/categories')
-        paths = response.data.categories.map(category => ({
+        const paths = response.data.categories.map(category => ({
             params: { slug: category.slug }
         }))
+
+        return {
+            paths,
+            fallback: 'blocking'
+        }
     } catch (error) {
+        return {
+            paths: [],
+            fallback: 'blocking'
+        }
         console.log(error)
     }
 
-    return {
-        paths,
-        fallback: true
-    }
 }
 
 

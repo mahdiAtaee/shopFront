@@ -2,10 +2,24 @@ import React from 'react'
 import * as API from '@/services/api'
 import ShopLayout from '@/components/layouts/Shop'
 import SingleProduct from '@/components/products/singleProduct'
+import { useRouter } from 'next/router'
 
 const index = ({ product, comments, relatedProducts }) => {
+
+    const router = useRouter()
+    if (router.isFallback) {
+        return (
+            <ShopLayout title="بارگذاری محصول...">
+                <div className="w-full h-screen flex items-center justify-center flex-col gap-4">
+                    <p className='text-lg md:text-2xl mb-6'>در حال بارگذاری ...</p>
+                    <div className='mover'/>
+                </div>
+            </ShopLayout>
+        )
+    }
+
     return (
-        <ShopLayout title="فروشگاه تک">
+        <ShopLayout title="مشخصات محصول">
             <SingleProduct product={product} comments={comments} relatedProducts={relatedProducts} />
         </ShopLayout>
     )
@@ -13,37 +27,30 @@ const index = ({ product, comments, relatedProducts }) => {
 
 
 export async function getStaticProps(context) {
-    const { id } = context.params
-
     try {
-        const product = await API.get(`/products/${id}`)
-        const comments = await API.get(`/products/${id}/comments`)
+        const { id } = context.params
+        const result = await API.get(`/products/details/${id}`)
 
-        let relatedProducts = []
-        if (product.status == 200 && product.data && product.data.category != null) {
-            const slug = product.data.category.slug;
-            const rel = await API.get(`/categories/${slug}/products`);
-            relatedProducts = rel?.data || [];
+        if (!result || !result.data) {
+            return { notFound: true };
         }
+        const { data } = result;
 
-        // console.log("product in getStaticProps:", product);
-        // console.log("comments in getStaticProps:", comments);
-        // console.log("relatedProducts in getStaticProps:", relatedProducts);
-        
 
         return {
             props: {
-                product: product?.data,
-                comments: comments?.data ? comments.data : [],
-                relatedProducts: relatedProducts?.data ? relatedProducts.data : []
+                product: data && data.product,
+                comments: data && data.comments ? data.comments : [],
+                relatedProducts: data && data.relatedProducts ? data.relatedProducts : []
             }
         }
 
     } catch (error) {
+
+        console.error("Error fetching product data:", error);
         if (error.response?.status === 404) {
             return { notFound: true };
         }
-        console.error("Error fetching product data:", error);
         throw error; // Re-throw the error to be handled by Next.js
     }
 

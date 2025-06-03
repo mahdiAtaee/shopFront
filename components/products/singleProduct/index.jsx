@@ -1,15 +1,52 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import Gallery from './components/Gallery'
-import Details from './components/Details'
-import Description from './components/Description'
-import Attributes from './components/Attributes'
-import Comments from './components/Comments'
+// import Gallery from './components/Gallery'
+// import Details from './components/Details'
+// import Description from './components/Description'
+// import Attributes from './components/Attributes'
+// import Comments from './components/Comments'
+//import Card from '@/components/home/Card'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import Card from '@/components/home/Card'
+import dynamic from 'next/dynamic'
+import GallerySkeleton from '@/components/skeleton/products/singleProduct/GallerySkeleton'
+import DetailsSkeleton from '@/components/skeleton/products/singleProduct/DetailsSkeleton'
+import DescriptionSkeleton from '@/components/skeleton/products/singleProduct/DescriptionSkeleton'
+import CardSkeleton from '@/components/skeleton/home/CardSkeleton'
+import AttributeSkeleton from '@/components/skeleton/products/singleProduct/AttributeSkeleton'
 
 
-const SingleProduct = ({ product, comments, relatedProducts }) => {    
+const Gallery = dynamic(() => import('./components/Gallery'), {
+    loading: () => <GallerySkeleton />,
+    ssr: false,
+})
+
+const Details = dynamic(() => import('./components/Details'), {
+    loading: () => <DetailsSkeleton />,
+    ssr: false,
+})
+
+const Description = dynamic(() => import('./components/Description'), {
+    loading: () => <DescriptionSkeleton />,
+    ssr: false,
+})
+
+const Attributes = dynamic(() => import('./components/Attributes'), {
+    loading: () => <AttributeSkeleton />,
+    ssr: false,
+})
+
+const Comments = dynamic(() => import('./components/Comments'), {
+    loading: () => <DescriptionSkeleton />,
+    ssr: false,
+})
+
+const Card = dynamic(() => import('@/components/home/Card'), {
+    loading: () => <CardSkeleton />,
+    ssr: false,
+})
+
+
+const SingleProduct = ({ product, comments, relatedProducts }) => {
     return (
         <section className="w-dvw min-h-dvh overflow-x-hidden">
             <div className='w-screen grid grid-cols-1 gird-rows-2 md:grid-cols-2 md:grid-rows-1 gap-8 p-4'>
@@ -81,7 +118,7 @@ const SingleProduct = ({ product, comments, relatedProducts }) => {
             </div>
             <div className='w-screen my-6'>
                 {relatedProducts &&
-                    <Card products={relatedProducts.products} title={`کالاهای مشابه در دسته بندی ${relatedProducts?.category?.name?.FA}`} />}
+                    <Card products={relatedProducts} title={`کالاهای مشابه در دسته بندی ${product?.category?.name?.FA}`} />}
             </div>
         </section>
     )
