@@ -1,12 +1,12 @@
+import React from 'react'
 import { applyUserAccountSchema } from '@/components/constant/formValidation/schema/UserAccount'
 import useAppContext from '@/context/useAppContext'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { FaArrowRight } from "react-icons/fa";
 
-const index = () => {
+const Addresses = () => {
     const { state } = useAppContext()
     const handleChangeInput = (e) => {
         const { name, value } = e.target
@@ -39,7 +39,7 @@ const index = () => {
         <div className='w-screen min-h-dvh fixed lg:static lg:w-full bg-white top-0 right-0 left-0 z-10 overflow-y-auto'>
             <Link href="/dashboard" className='flex lg:hidden items-center gap-2 p-4 bg-white border-b-8 border-gray-200 mb-4 cursor-pointer'>
                 <FaArrowRight width={10} />
-                <span>اطلاعات کاربری</span>
+                <span>آدرس ها</span>
             </Link>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4'>
@@ -82,8 +82,8 @@ const index = () => {
                     ذخیره
                 </button>
             </form>
-        </div >
+        </div>
     )
 }
 
-export default index
+export default Addresses

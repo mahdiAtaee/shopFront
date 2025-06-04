@@ -25,7 +25,7 @@ const Addresses = ({ addresses }) => {
     }
     return (
         <>
-            {addresses.length > 0 &&
+            {(addresses && addresses.length > 0) &&
                 <>
                     <button onClick={handleOpenModal} className="text-xs md:text-lg py-2 px-4 bg-blue-300 text-blue-50 rounded cursor-pointer">انتخاب آدرس ارسال</button>
                     <AddressList closeModal={onClose} modalIsOpen={modalIsOpen} addresses={addresses} handleChangeAddress={handleChangeAddress} />
