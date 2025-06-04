@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Menu from './Menu'
 import useAppContext from '@/context/useAppContext'
 import Link from 'next/link'
@@ -6,8 +6,24 @@ import Image from 'next/image'
 import { HiOutlineLogin } from "react-icons/hi";
 import { SlBasket } from "react-icons/sl";
 import { CiSearch } from "react-icons/ci";
+import { addQueryArgs } from '@/services/queryString'
+import { useRouter } from 'next/router'
+
 const Header = () => {
     const { state } = useAppContext()
+    const [searchQuery, setSearchQuery] = useState('')
+    const router = useRouter()
+
+
+    const handleSearchChange = (e) => {
+        if (event.code === 'Enter' || event.key === 'Enter') {
+            if(router.query.q){
+                router.query = ''
+            }
+            const query = addQueryArgs(router.query, 'q', searchQuery)
+            router.push(`/search?${query}`)
+        }
+    }
 
 
     return (
@@ -21,7 +37,7 @@ const Header = () => {
                             </Link>
                             <div className='relative w-full rounded-lg bg-gray-300 py-1.5 px-8 min-h-10 '>
                                 <CiSearch className='absolute top-1/2 right-2.5 -translate-y-1/2 text-xl' />
-                                <input type='search' placeholder='جستجو' className='w-full h-full outline-0 text-xs' />
+                                <input type='search' onKeyDown={handleSearchChange} onChange={(e) => setSearchQuery(e.target.value)} placeholder='جستجو' className='w-full h-full outline-0 text-xs' />
                             </div>
                         </div>
                         <div className="hidden md:flex items-center justify-end grow">

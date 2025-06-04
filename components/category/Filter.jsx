@@ -9,7 +9,6 @@ import { IoIosArrowUp } from "react-icons/io";
 import * as API from '@/services/api'
 
 const Filter = ({ category, isShow, handleShowFilter }) => {
-    console.log('category', category);
     const [categories, setCategories] = useState(category ? category : [])
 
 
