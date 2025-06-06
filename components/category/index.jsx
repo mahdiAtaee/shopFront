@@ -27,7 +27,7 @@ const index = () => {
                 {childCategories.map(category => (
                     <li key={category._id} className="py-1 cursor-pointer">
                         <div className="flex items-center">
-                            <Image src={category.iconUrl} width={40} height={40} alt='category' />
+                            <Image src={category.icon} width={40} height={40} alt='category' />
                             {level > 1 && (
                                 <div className="h-6 mr-2"></div>
                             )}

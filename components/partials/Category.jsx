@@ -48,7 +48,7 @@ const CategoryMenu = ({ categories }) => {
                   document.activeElement.blur() // جلوگیری از فوکوس خودکار روی دکمه
                 }}
                 className="font-vazir text-[0.9rem] h-max min-w-16 py-4 px-2 w-full hover:bg-gray-200 cursor-pointer flex item-center justify-start gap-2">
-                <Image width={20} height={20} src={category.iconUrl} alt='icon' />
+                <Image width={20} height={20} src={category.icon} alt='icon' />
                 {category.name.FA}
               </span>
             </Tab>
